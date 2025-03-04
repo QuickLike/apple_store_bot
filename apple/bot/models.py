@@ -1,10 +1,11 @@
+from asgiref.sync import sync_to_async
 from django.contrib.humanize.templatetags.humanize import intcomma
 from django.db import models
 from django.utils.safestring import mark_safe
 
 
 class TelegramUser(models.Model):
-    user_id = models.PositiveIntegerField(
+    user_id = models.PositiveBigIntegerField(
         verbose_name='ID Пользователя',
         unique=True
     )
@@ -28,7 +29,12 @@ class TelegramUser(models.Model):
     )
 
     def __str__(self):
-        return f'ID {self.user_id} | {self.first_name} {self.last_name} ({self.username})'
+        return f'ID {self.user_id} - {self.first_name} {self.last_name} ({self.username})'
+
+    @classmethod
+    @sync_to_async()
+    def async_create(cls, **kwargs):
+        return cls.objects.get_or_create(**kwargs)
 
     class Meta:
         verbose_name = 'Пользователь'

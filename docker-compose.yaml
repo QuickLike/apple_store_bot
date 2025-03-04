@@ -1,7 +1,9 @@
 version: "3"
+
 volumes:
   static:
   media:
+  postgres_data:
 
 services:
   postgres:
@@ -9,6 +11,8 @@ services:
     env_file: .env
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   backend:
     build: ./apple/
@@ -20,9 +24,23 @@ services:
     volumes:
       - static:/backend_static/static
       - media:/media/
+      - ./apple:/app
     command: >
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
              python manage.py loaddata db.json &&
              python manage.py initadmin &&
              python manage.py runserver 0.0.0.0:8000"
+
+  telegram_bot:
+    build: ./telegram_bot/
+    env_file: .env
+    depends_on:
+      - postgres
+      - backend
+    volumes:
+      - media:/media/
+      - ./telegram_bot:/bot
+      - ./apple:/app
+    working_dir: /bot
+    command: python main.py

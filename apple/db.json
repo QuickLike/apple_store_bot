@@ -1,27 +1,5 @@
 [
 {
-    "model": "bot.telegramuser",
-    "pk": 2,
-    "fields": {
-        "user_id": 343798461,
-        "first_name": "Эдуард",
-        "last_name": "Власов",
-        "username": "QuickLiker",
-        "created_at": "2025-03-02T17:46:34.300Z"
-    }
-},
-{
-    "model": "bot.telegramuser",
-    "pk": 3,
-    "fields": {
-        "user_id": 508210590,
-        "first_name": "Глория",
-        "last_name": "",
-        "username": "Gloffik",
-        "created_at": "2025-03-02T17:46:56.487Z"
-    }
-},
-{
     "model": "bot.category",
     "pk": 1,
     "fields": {
