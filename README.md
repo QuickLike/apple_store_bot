@@ -5,11 +5,20 @@
 ```
 git clone https://github.com/QuickLike/apple_store_bot
 ```
-2. Перейдите в директорию
+2. Перейдите в директорию проекта
 ```
-cd apple
+cd apple_store_bot
 ```
-3. Создайте файл .env и добавьте в него необходимые переменные окружения без фигурных скобок
+3. Создайте два файла .env: в корневой директории и /apple/. Добавьте в них необходимые переменные окружения без фигурных скобок
+
+__Корень проекта__
+```
+POSTGRES_DB=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+```
+
+__Директория /apple/__
 ```
 SECRET_KEY={secret key django}
 DEBUG={debug mode true or false}
@@ -29,7 +38,7 @@ DJANGO_SUPERUSER_USERNAME={username суперпользователя}
 DJANGO_SUPERUSER_EMAIL={email суперпользователя}
 DJANGO_SUPERUSER_PASSWORD={password суперпользователя}
 ```
-4. Запустите локальный сервер
+4. Запустите локальный сервер из корня проекта
 ```
 docker-compose up --build
 ```
