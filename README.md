@@ -9,7 +9,7 @@ git clone https://github.com/QuickLike/apple_store_bot
 ```
 cd apple_store_bot
 ```
-3. Создайте два файла .env: в корневой директории и /apple/. Добавьте в них необходимые переменные окружения без фигурных скобок
+3. Создайте два файла .env: в корневой директории и /django_admin/. Добавьте в них необходимые переменные окружения без фигурных скобок
 
 __Корень проекта__
 ```
@@ -18,7 +18,7 @@ POSTGRES_USER=
 POSTGRES_PASSWORD=
 ```
 
-__Директория /apple/__
+__Директория /django_admin/__
 ```
 SECRET_KEY={secret key django}
 DEBUG={debug mode true or false}

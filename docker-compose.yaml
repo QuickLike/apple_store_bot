@@ -15,7 +15,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
-    build: ./apple/
+    build: django_admin/
     env_file: .env
     depends_on:
       - postgres
@@ -24,7 +24,7 @@ services:
     volumes:
       - static:/backend_static/static
       - media:/media/
-      - ./apple:/app
+      - ./django_admin:/app
     command: >
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
@@ -41,6 +41,6 @@ services:
     volumes:
       - media:/media/
       - ./telegram_bot:/bot
-      - ./apple:/app
+      - ./django_admin:/app
     working_dir: /bot
     command: python main.py
