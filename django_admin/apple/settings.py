@@ -7,6 +7,8 @@ env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+BASE_URL = env.str('BASE_URL')
+
 SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!

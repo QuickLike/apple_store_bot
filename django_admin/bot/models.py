@@ -1,6 +1,9 @@
+import logging
+
 from asgiref.sync import sync_to_async
 from django.contrib.humanize.templatetags.humanize import intcomma
 from django.db import models
+from django.db.models import Prefetch
 from django.utils.safestring import mark_safe
 
 
@@ -32,9 +35,19 @@ class TelegramUser(models.Model):
         return f'ID {self.user_id} - {self.first_name} {self.last_name} ({self.username})'
 
     @classmethod
-    @sync_to_async()
+    @sync_to_async
     def async_create(cls, **kwargs):
         return cls.objects.get_or_create(**kwargs)
+
+    @classmethod
+    @sync_to_async
+    def async_get_cart_items(cls, user_id: int):
+        user = cls.objects.select_related('shopping_cart').get(user_id=user_id)
+        if not hasattr(user, 'shopping_cart'):
+            return []
+        cart_items = list(
+            CartItem.objects.filter(shopping_cart=user.shopping_cart).select_related('item').all())
+        return cart_items
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -89,7 +102,7 @@ class Item(models.Model):
     )
     stock = models.PositiveIntegerField(
         verbose_name='В наличии',
-        default=0,
+        default=10,
     )
 
     def __str__(self):
@@ -127,7 +140,8 @@ class ShoppingCart(models.Model):
         return f'Корзина покупок #{self.user.user_id}'
 
     def total_price(self):
-        return f'{intcomma(sum(item.total_price() for item in self.cart_items.all()))} ₽'
+        total = sum(item.item.price * item.quantity for item in self.cart_items.all())
+        return f'{intcomma(total)} ₽'
 
     class Meta:
         default_related_name = 'shopping_carts'

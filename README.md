@@ -20,6 +20,8 @@ POSTGRES_PASSWORD=
 
 __Директория /django_admin/__
 ```
+BASE_URL={url вашего хоста | https://127.0.0.1:8000 для локального запуска}
+
 SECRET_KEY={secret key django}
 DEBUG={debug mode true or false}
 ALLOWED_HOSTS={hosts separated with comma}
